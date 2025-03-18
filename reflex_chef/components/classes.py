@@ -25,7 +25,7 @@ class GroceryItem(Base):
         self.nutrition = data.get("nutrition", {})
         self.allergens = data.get("allergens", [])
 
-    def to_dict(self) -> str:
+    def to_dict(self) -> dict:
         return {
             "name": self.name,
             "quantity": self.quantity,
@@ -48,7 +48,7 @@ class SupabaseRequest(Base):
         self.api_key = api_key
         self.access_token = access_token
 
-    def get_all_from_table(self, table: str, last_modified: str) -> dict:
+    def get_all_from_table(self, table: str, last_modified: str) -> dict | None:
         logger.info(f"Requesting data from table '{table}'...")
         url= f"{self.api_url}/rest/v1/{table}?&select=modified_at"
         headers={
