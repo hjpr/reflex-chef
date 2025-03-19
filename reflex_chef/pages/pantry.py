@@ -16,24 +16,29 @@ def pantry() -> rx.Component:
 
 def content() -> rx.Component:
     return rx.flex(
-        add(),
         items(),
-        class_name="flex-col items-center justify-center space-y-4 py-4 md:py-24 p-4 w-full max-w-lg"
+        add(),
+        class_name="flex-col items-center space-y-4 w-full"
     )
 
 def add() -> rx.Component:
     return rx.flex(
         rx.flex(
-            rx.icon("list-plus", class_name="stroke-white"),
-            rx.text("MANUALLY ADD", class_name="text-sm font-bold text-white"),
-            class_name="flex-row items-center rounded-lg justify-center bg-teal-500 cursor-pointer gap-2 p-2 w-full"
+            rx.flex(
+                rx.icon("list-plus", class_name="stroke-white"),
+                rx.text("MANUALLY ADD", class_name="text-sm font-bold text-white"),
+                on_click=rx.redirect("/pantry/add"),
+                class_name="flex-row items-center rounded-lg justify-center bg-teal-500 cursor-pointer gap-2 p-3 w-full"
+            ),
+            rx.flex(
+                rx.icon("upload", class_name="stroke-white"),
+                rx.text("UPLOAD RECEIPT", class_name="text-sm font-bold text-white"),
+                on_click=rx.redirect("/pantry/upload"),
+                class_name="flex-row items-center rounded-lg justify-center bg-teal-500 cursor-pointer gap-2 p-3 w-full"
+            ),
+            class_name="flex-row items-center justify-center gap-4 px-4 md:px-0 py-4 w-full max-w-lg"
         ),
-        rx.flex(
-            rx.icon("wand-sparkles", class_name="stroke-white"),
-            rx.text("UPLOAD RECEIPT", class_name="text-sm font-bold text-white"),
-            class_name="flex-row items-center rounded-lg justify-center bg-teal-500 cursor-pointer gap-2 p-2 w-full"
-        ),
-        class_name="flex-row items-center justify-center gap-4 w-full max-w-xl"
+        class_name="flex-row items-center border justify-center sticky bottom-0 gap-4 bg-white w-full"
     )
 
 def items() -> rx.Component:
@@ -53,7 +58,6 @@ def items() -> rx.Component:
                     class_name="flex-row w-full"            
                 ),
                 content=rx.foreach(PantryState.meat_seafood, pantry_item),
-                disabled=~PantryState.meat_seafood
             ),
             rx.accordion.item(
                 header=rx.flex(
@@ -69,7 +73,6 @@ def items() -> rx.Component:
                     class_name="flex-row w-full"
                 ),
                 content=rx.foreach(PantryState.fresh_produce, pantry_item),
-                disabled=~PantryState.fresh_produce
             ),
             rx.accordion.item(
                 header=rx.flex(
@@ -85,7 +88,6 @@ def items() -> rx.Component:
                     class_name="flex-row w-full"
                 ),
                 content=rx.foreach(PantryState.milk_cheese_and_eggs, pantry_item),
-                disabled=~PantryState.milk_cheese_and_eggs
             ),
             rx.accordion.item(
                 header=rx.flex(
@@ -101,7 +103,6 @@ def items() -> rx.Component:
                     class_name="flex-row w-full"
                 ),
                 content=rx.foreach(PantryState.bread_rice_and_flour, pantry_item),
-                disabled=~PantryState.bread_rice_and_flour
             ),
             rx.accordion.item(
                 header=rx.flex(
@@ -117,7 +118,6 @@ def items() -> rx.Component:
                     class_name="flex-row w-full"
                 ),
                 content=rx.foreach(PantryState.spices_and_seasonings, pantry_item),
-                disabled=~PantryState.spices_and_seasonings  
             ),
             rx.accordion.item(
                 header=rx.flex(
@@ -133,7 +133,6 @@ def items() -> rx.Component:
                     class_name="flex-row w-full"
                 ),
                 content=rx.foreach(PantryState.oils_and_vinegars, pantry_item),
-                disabled=~PantryState.oils_and_vinegars
             ),
             rx.accordion.item(
                 header=rx.flex(
@@ -149,7 +148,6 @@ def items() -> rx.Component:
                     class_name="flex-row w-full"
                 ),
                 content=rx.foreach(PantryState.snacks_and_sweets, pantry_item),
-                disabled=~PantryState.snacks_and_sweets 
             ),
             rx.accordion.item(
                 header=rx.flex(
@@ -165,7 +163,6 @@ def items() -> rx.Component:
                     class_name="flex-row w-full"
                 ),
                 content=rx.foreach(PantryState.beverages, pantry_item),
-                disabled=~PantryState.beverages
             ),      
             rx.accordion.item(
                 header=rx.flex(
@@ -180,8 +177,7 @@ def items() -> rx.Component:
                     rx.text("Frozen Foods"),
                     class_name="flex-row w-full"
                 ),
-                content=rx.foreach(PantryState.frozen_foods, pantry_item),
-                disabled=~PantryState.frozen_foods   
+                content=rx.foreach(PantryState.frozen_foods, pantry_item), 
             ),     
             rx.accordion.item(
                 header=rx.flex(
@@ -197,7 +193,6 @@ def items() -> rx.Component:
                     class_name="flex-row w-full"
                 ),
                 content=rx.foreach(PantryState.condiments_and_sauces, pantry_item),
-                disabled=~PantryState.condiments_and_sauces
             ),     
             rx.accordion.item(
                 header=rx.flex(
@@ -213,7 +208,6 @@ def items() -> rx.Component:
                     class_name="flex-row w-full"
                 ),
                 content=rx.foreach(PantryState.nuts_seeds_and_dried_fruits, pantry_item),
-                disabled=~PantryState.nuts_seeds_and_dried_fruits 
             ),
             rx.accordion.item(
                 header=rx.flex(
@@ -229,7 +223,6 @@ def items() -> rx.Component:
                     class_name="flex-row w-full"
                 ),
                 content=rx.foreach(PantryState.dry_baking_goods, pantry_item),
-                disabled=~PantryState.dry_baking_goods
             ),
             rx.accordion.item(
                 header=rx.flex(
@@ -245,7 +238,6 @@ def items() -> rx.Component:
                     class_name="flex-row w-full"
                 ),
                 content=rx.foreach(PantryState.canned_goods, pantry_item),
-                disabled=~PantryState.canned_goods
             ),
             rx.accordion.item(
                 header=rx.flex(
@@ -261,13 +253,13 @@ def items() -> rx.Component:
                     class_name="flex-row w-full"
                 ),
                 content=rx.foreach(PantryState.jarred_goods, pantry_item),
-                disabled=~PantryState.jarred_goods
             ),    
             collapsible=True,
             variant="surface",
+            color_scheme="pink",
             class_name="w-full"
         ),
-        class_name="flex w-full max-w-xl"
+        class_name="flex p-4 md:pt-16 md:px-0 w-full max-w-lg"
     )
 
 def pantry_item(item: GroceryItem) -> rx.Component:
@@ -278,6 +270,7 @@ def pantry_item(item: GroceryItem) -> rx.Component:
         ),
         rx.flex(
             rx.icon("trash-2", class_name="h-5 w-5"),
+            on_click=PantryState.remove_from_pantry(item),
             class_name="p-3 cursor-pointer active:bg-teal-100 transition-colors duration-75"
         ),
         class_name="flex-row items-center justify-between w-full"
